@@ -22,3 +22,8 @@ Admin view enables you to do the following:
 - Manage Team Members (Add, Edit, or Delete)
 - Manage Sprint Team Members (Add, Edit, or Delete)
 - Manage Team Members Roles
+
+# ScrumWiki Snapshots
+Running Sprints
+![running sprints](https://user-images.githubusercontent.com/20907654/33550028-28107dd8-d8f5-11e7-88c6-673df00da419.png)
+
