@@ -42,4 +42,21 @@ Admin view enables you to do the following:
 # Project Details
 ![project details](https://user-images.githubusercontent.com/20907654/33550216-c49483ca-d8f5-11e7-92ca-1282283c1d8f.png)
 
+# Admin View
+# Manage Sprints
+![manage sprints](https://user-images.githubusercontent.com/20907654/33550779-dd6e796c-d8f7-11e7-87c2-4e1d70e034b9.png)
 
+# Manage Projects
+![manage projects](https://user-images.githubusercontent.com/20907654/33550780-dda409ba-d8f7-11e7-9326-3aa488483234.png)
+
+# Manage Backlog
+![manage backlog](https://user-images.githubusercontent.com/20907654/33550781-ddd8e4dc-d8f7-11e7-993d-40d371b44ab0.png)
+
+# Manage Sprint Team
+![manage sprint team](https://user-images.githubusercontent.com/20907654/33550782-de0cc536-d8f7-11e7-83d9-821587dd4bfa.png)
+
+# Manage Team Members
+![manage team members](https://user-images.githubusercontent.com/20907654/33550783-de43e0e8-d8f7-11e7-96c6-50ee71c67819.png)
+
+# Manage Roles
+![manage roles](https://user-images.githubusercontent.com/20907654/33550784-de76c8b4-d8f7-11e7-8c8e-5f2abf37fbb3.png)
