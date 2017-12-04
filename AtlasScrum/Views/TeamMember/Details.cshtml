@@ -1,0 +1,31 @@
+﻿@model AtlasScrum.Models.TeamMember
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Team Member</h4>
+    <hr />
+    <table class="zebra">
+        
+        <tr>
+            <td>
+                <b>@Html.DisplayNameFor(model => model.FullName)</b>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.FullName)  
+            </td>
+        </tr>
+    </table>
+</div>
+<br/>
+<p>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { controller = "TeamMember", id = Model.TeamMemberId }, new { @class = "btn btn-default btnEdit" })
+    }
+    @Html.ActionLink("Back to List", "Index", new { controller = "TeamMember" }, new { @class = "btn btn-default btnBack" })
+</p>

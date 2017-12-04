@@ -1,0 +1,39 @@
+﻿@model AtlasScrum.Models.SprintTeamMember
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sprint Team Member</h4>
+    <hr />
+    <table class="zebra">
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.Role.Description)</b></td>
+            <td>@Html.DisplayFor(model => model.Role.Description)</td>
+        </tr>
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.Sprint.SprintName)</b></td>
+            <td>@Html.DisplayFor(model => model.Sprint.SprintName)</td>
+        </tr>
+        
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.TeamMember.FullName)</b></td>
+            <td>@Html.DisplayFor(model => model.TeamMember.FullName)</td>
+        </tr>
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.IsManOfSprint)</b></td>
+            <td>@Html.DisplayFor(model => model.IsManOfSprint)</td>
+        </tr>
+    </table>
+</div>
+<br/>
+<p>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { controller = "SprintTeamMember", id = Model.SprintTeamMemberId }, new { @class = "btn btn-default btnEdit" })
+    }
+    @Html.ActionLink("Back to List", "Index", new { controller = "SprintTeamMember" }, new { @class = "btn btn-default btnBack" })
+</p>

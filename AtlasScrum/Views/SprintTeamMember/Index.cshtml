@@ -1,0 +1,106 @@
+﻿@*@model IEnumerable<AtlasScrum.Models.SprintTeamMember>*@
+@model PagedList.IPagedList<AtlasScrum.Models.SprintTeamMember>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Sprint Team Members";
+}
+
+<h2>Sprint Team Members</h2>
+
+@using (Html.BeginForm("Index", "SprintTeamMember", FormMethod.Get))
+{
+    <p>
+        <table class="zebra">
+            <tr>
+                <td>Role:</td>
+                <td>@Html.DropDownList("SearchRoleId", string.Empty)</td>
+                <td>Sprint:</td>
+                <td>@Html.DropDownList("SearchSprintId", string.Empty)</td>
+            </tr>
+            <tr>
+                <td>
+                    Full Name:
+                </td>
+                <td>
+                    @Html.TextBox("SearchFullName", ViewBag.CurrentFilterFullName as string)
+                </td>
+                <td>
+                    Man of Sprint:
+                </td>
+                <td>
+                    @Html.DropDownList("SearchMoS", string.Empty)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Search" class="btn btn-default btnSearch" /></td>
+                <td></td>
+                <td>
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Add New", "Create", new { controller = "SprintTeamMember" }, new { @class = "btn btn-default btnAddNew" })
+                    }
+                </td>
+            </tr>
+        </table>
+    </p>
+}
+
+<table class="bordered" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Role.Description)*@
+                @Html.ActionLink("Role Name", "Index", new { sortOrder = ViewBag.SortParmRoleName, currentFilterRoleId = ViewBag.CurrentFilterRoleId, currentFilterSprintId = ViewBag.CurrentFilterSprintId, currentFilterFullName = ViewBag.CurrentFilterFullName, currentFilterMoS = ViewBag.CurrentFilterMoS })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Sprint.SprintName)*@
+                @Html.ActionLink("Sprint Name", "Index", new { sortOrder = ViewBag.SortParmSprintName, currentFilterRoleId = ViewBag.CurrentFilterRoleId, currentFilterSprintId = ViewBag.CurrentFilterSprintId, currentFilterFullName = ViewBag.CurrentFilterFullName, currentFilterMoS = ViewBag.CurrentFilterMoS })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.TeamMember.FullName)*@
+                @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.SortParmFullName, currentFilterRoleId = ViewBag.CurrentFilterRoleId, currentFilterSprintId = ViewBag.CurrentFilterSprintId, currentFilterFullName = ViewBag.CurrentFilterFullName, currentFilterMoS = ViewBag.CurrentFilterMoS })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.IsManOfSprint)*@
+                @Html.ActionLink("Man of Sprint", "Index", new { sortOrder = ViewBag.SortParmMoS, currentFilterRoleId = ViewBag.CurrentFilterRoleId, currentFilterSprintId = ViewBag.CurrentFilterSprintId, currentFilterFullName = ViewBag.CurrentFilterFullName, currentFilterMoS = ViewBag.CurrentFilterMoS })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="vertical-align: middle;">
+                @Html.DisplayFor(modelItem => item.Role.Description)
+            </td>
+            <td style="vertical-align: middle;">
+                @Html.DisplayFor(modelItem => item.Sprint.SprintName)
+            </td>
+            <td style="vertical-align: middle;">
+                @Html.DisplayFor(modelItem => item.TeamMember.FullName)
+            </td>
+            <td style="vertical-align: middle; text-align: center;">
+                @*@Html.DisplayFor(modelItem => item.IsManOfSprint)*@
+
+                <img src="@Url.Content("~/Content/star.png")" alt="Man of sprint" style="height: 30px;" hidden="@(item.IsManOfSprint == false)" />
+            </td>
+            <td style="vertical-align: middle;">
+                @Html.ActionLink("Details", "Details", new { id = item.SprintTeamMemberId }) 
+
+                @if (Request.IsAuthenticated)
+                {
+                    @:|
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SprintTeamMemberId })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SprintTeamMemberId })}
+            </td>
+        </tr>
+    }
+
+</table>
+<br /> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilterRoleId = ViewBag.CurrentFilterRoleId, currentFilterSprintId = ViewBag.CurrentFilterSprintId, currentFilterFullName = ViewBag.CurrentFilterFullName, currentFilterMoS = ViewBag.CurrentFilterMoS }))

@@ -1,0 +1,72 @@
+﻿@*@model IEnumerable<AtlasScrum.Models.Role>*@
+@model PagedList.IPagedList<AtlasScrum.Models.Role>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Roles</h2>
+
+@using (Html.BeginForm("Index", "Role", FormMethod.Get))
+{
+    <p>
+        <table class="zebra">
+            <tr>
+                <td>
+                    Role Name:
+                </td>
+                <td>
+                    @Html.TextBox("SearchStringName", ViewBag.CurrentFilterName as string)
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Search" class="btn btn-default btnSearch" />
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Add New", "Create", new { controller = "Role" }, new { @class = "btn btn-default btnAddNew" })
+                    }
+
+                </td>
+
+            </tr>
+        </table>
+    </p>
+}
+
+<table class="bordered" width="600">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Role Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilterName = ViewBag.CurrentFilterName })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.RoleId })
+                @if (Request.IsAuthenticated)
+                {
+                    @:|
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RoleId })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RoleId })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br /> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilterName = ViewBag.CurrentFilterName }))

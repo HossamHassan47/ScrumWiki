@@ -1,0 +1,105 @@
+﻿@model AtlasScrum.Models.Sprint
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sprint</h4>
+    <hr />
+    <table class="zebra">
+        <tr>
+            <td>
+                <b> @Html.DisplayNameFor(model => model.Project.ProjectName)</b>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Project.ProjectName)
+            </td>
+        </tr>
+
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.SprintName)</b></td>
+            <td>@Html.DisplayFor(model => model.SprintName)</td>
+        </tr>
+
+
+
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.SprintGoal)</b></td>
+            <td>@Html.DisplayFor(model => model.SprintGoal)</td>
+        </tr>
+
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.FromDate)</b></td>
+            <td>@Html.DisplayFor(model => model.FromDate)</td>
+        </tr>
+
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.ToDate)</b></td>
+            <td>@Html.DisplayFor(model => model.ToDate)</td>
+        </tr>
+
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.DailyScrum)</b></td>
+            <td>@Html.DisplayFor(model => model.DailyScrum)</td>
+        </tr>
+
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.SprintDemo)</b></td>
+            <td>@Html.DisplayFor(model => model.SprintDemo)</td>
+        </tr>
+
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.IsCurrent)</b></td>
+            <td>@Html.DisplayFor(model => model.IsCurrent)</td>
+        </tr>
+
+    </table>
+
+    <h4>@Html.DisplayNameFor(model => model.BacklogItems)</h4>
+
+    <table class="zebra">
+        <tr>
+            <th>Backlog Item</th>
+            <th>Estimate</th>
+        </tr>
+        @foreach (var item in Model.BacklogItems.OrderBy(i => i.Description))
+        {
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.Description) </td>
+                <td> @Html.DisplayFor(modelItem => item.Estimate) </td>
+            </tr>
+        }
+    </table>
+
+    <h4>@Html.DisplayNameFor(model => model.SprintTeamMembers)</h4>
+
+    <table class="zebra">
+        <tr>
+            <th>Member Name</th>
+            <th>Role</th>
+            <th>Man of Sprint</th>
+        </tr>
+        @foreach (var item in Model.SprintTeamMembers.OrderBy(m => m.TeamMember.FullName))
+        {
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.TeamMember.FullName) </td>
+                <td> @Html.DisplayFor(modelItem => item.Role.Description) </td>
+                <td style="vertical-align: middle; text-align: center;">
+                    <img src="@Url.Content("~/Content/star.png")" alt="Man of sprint" style="height: 30px;" hidden="@(item.IsManOfSprint == false)" />
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+</div>
+<p>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { controller = "Sprint", id = Model.SprintId }, new { @class = "btn btn-default btnEdit" })
+    }
+    
+    @Html.ActionLink("Back to List", "Index", new { controller = "Sprint" }, new { @class = "btn btn-default btnBack" })
+</p>

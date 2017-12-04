@@ -1,0 +1,130 @@
+﻿@*@model IEnumerable<AtlasScrum.Models.Sprint>*@
+@model PagedList.IPagedList<AtlasScrum.Models.Sprint>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Sprints";
+}
+
+<h2>Sprints</h2>
+
+
+@using (Html.BeginForm("Index", "Sprint", FormMethod.Get))
+{
+    <p>
+        <table class="zebra">
+            <tr>
+                <td>
+                    Project:
+                </td>
+                <td>
+                    @Html.DropDownList("ProjectId", string.Empty)
+                </td>
+                <td>Sprint Name:</td>
+                <td>@Html.TextBox("SearchString", ViewBag.CurrentFilter as string)</td>
+
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Search" class="btn btn-default btnSearch" />
+                </td>
+                <td></td>
+                <td>
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Add New", "Create", new { controller = "Sprint" }, new { @class = "btn btn-default btnAddNew" })
+                    }
+                </td>
+            </tr>
+        </table>
+    </p>
+}
+
+<p>
+
+</p>
+
+<table class="bordered" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Project.ProjectName)*@
+                @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.ProjectSortParm, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.SprintName)*@
+                @Html.ActionLink("Sprint Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject })
+            </th>
+            <th>
+                @Html.ActionLink("Sprint Goal", "Index", new { sortOrder = ViewBag.GoalSortParm, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject })
+            </th>
+            <th>
+                @Html.ActionLink("From", "Index", new { sortOrder = ViewBag.FromSortParm, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject })
+            </th>
+            <th>
+                @Html.ActionLink("To", "Index", new { sortOrder = ViewBag.ToSortParm, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject })
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.DailyScrum)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SprintDemo)
+                </th>*@
+            <th>
+                @Html.ActionLink("Is Running", "Index", new { sortOrder = ViewBag.IsRunningSortParm, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SprintName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SprintGoal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromDate)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDate)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.DailyScrum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SprintDemo)
+                </td>*@
+            <td style="vertical-align: middle; text-align: center;">
+                @*@Html.DisplayFor(modelItem => item.IsCurrent)*@
+
+                <img src="@Url.Content("~/Content/yes.png")" alt="Running" style="height: 25px;" hidden="@(item.IsCurrent == false)" />
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.SprintId })
+
+                @if (Request.IsAuthenticated)
+                {
+                    @:|
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SprintId })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SprintId })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+<br /> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject }))

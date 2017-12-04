@@ -1,0 +1,57 @@
+﻿@model IEnumerable<AtlasScrum.Models.Sprint>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Running Sprints</h1>
+@foreach (var item in Model)
+{
+    <div class="jumbotron">
+        <h1>@item.SprintName</h1>
+        <p class="lead">Sprint goal: @item.SprintGoal</p>
+        <p>@*<a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a>*@</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Backlog</h2>
+            <p>
+                <ul>
+                    @foreach (var backlog in item.BacklogItems.OrderBy(i => i.Description))
+                    {
+                        <li>@Html.DisplayFor(modelItem => backlog.Description) (@Html.DisplayFor(modelItem => backlog.Estimate) days)</li>
+                    }
+                </ul>
+            </p>
+            <p>@*<a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a>*@</p>
+        </div>
+        <div class="col-md-4">
+            <h2>Schedule</h2>
+            <p>
+                <ul>
+                    <li>Sprint period: @item.FromDate.ToShortDateString() to @item.ToDate.ToShortDateString()</li>
+                    <li>Daily scrum: @item.DailyScrum</li>
+                    <li>Sprint demo: @item.SprintDemo</li>
+                </ul>
+            </p>
+            <p>@*<a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a>*@</p>
+        </div>
+        <div class="col-md-4">
+            <h2>Team</h2>
+            <p>
+                <ul>
+                    @foreach (var member in item.SprintTeamMembers.OrderBy(m => m.TeamMember.FullName))
+                    {
+                        <li>
+                            @Html.DisplayFor(modelItem => member.TeamMember.FullName) (@Html.DisplayFor(modelItem => member.Role.Description))
+                            <img src="@Url.Content("~/Content/star.png")" alt="Man of sprint" style="height: 18px;" title="Man of Sprint" hidden="@(member.IsManOfSprint == false)" />
+                        </li>
+                    }
+                </ul>
+            </p>
+            <p>@*<a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a>*@</p>
+        </div>
+    </div>
+}
+

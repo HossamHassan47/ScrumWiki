@@ -1,0 +1,52 @@
+﻿@model AtlasScrum.Models.Project
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Project</h4>
+    <hr />
+    <table class="zebra">
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.ProjectName)</b></td>
+            <td>
+                @Html.DisplayFor(model => model.ProjectName)
+            </td>
+        </tr>
+        
+    </table>
+
+    <h4>Sprints</h4>
+    <table class="zebra">
+        <tr>
+            <th>Sprint Name</th>
+            <th>Sprint Goal</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Is Running</th>
+        </tr>
+        @foreach (var item in Model.Sprints)
+        {
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.SprintName) </td>
+                <td> @Html.DisplayFor(modelItem => item.SprintGoal) </td>
+                <td> @Html.DisplayFor(modelItem => item.FromDate) </td>
+                <td> @Html.DisplayFor(modelItem => item.ToDate) </td>
+                <td style="vertical-align: middle; text-align: center;">
+                    <img src="@Url.Content("~/Content/yes.png")" alt="Running" style="height: 25px;" hidden="@(item.IsCurrent == false)" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<br/>
+<p>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { controller = "Project", id = Model.ProjectId }, new { @class = "btn btn-default btnEdit" })
+    }
+    @Html.ActionLink("Back to List", "Index", new { controller = "Project" }, new { @class = "btn btn-default btnBack" })
+</p>

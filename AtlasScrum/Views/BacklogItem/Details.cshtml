@@ -1,0 +1,34 @@
+﻿@model AtlasScrum.Models.BacklogItem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Backlog Item</h4>
+    <hr />
+    <table class="zebra">
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.Sprint.SprintName)</b></td>
+            <td>@Html.DisplayFor(model => model.Sprint.SprintName)</td>
+        </tr>
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.Description)</b></td>
+            <td>@Html.DisplayFor(model => model.Description)</td>
+        </tr>
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.Estimate)</b></td>
+            <td>@Html.DisplayFor(model => model.Estimate)</td>
+        </tr>
+    </table>
+</div>
+<br/>
+<p>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { controller = "BacklogItem", id = Model.BacklogItemId }, new { @class = "btn btn-default btnEdit" })
+    }
+    @Html.ActionLink("Back to List", "Index", new { controller = "BacklogItem" }, new { @class = "btn btn-default btnBack" })
+</p>

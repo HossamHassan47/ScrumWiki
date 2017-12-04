@@ -1,0 +1,73 @@
+﻿@*@model IEnumerable<AtlasScrum.Models.Project>*@
+@model PagedList.IPagedList<AtlasScrum.Models.Project>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+<h2>Projects</h2>
+
+@using (Html.BeginForm("Index", "Project", FormMethod.Get))
+{
+    <p>
+        <table class="zebra">
+            <tr>
+                <td>
+                    Project Name:
+                </td>
+                <td>
+                    @Html.TextBox("SearchStringProject", ViewBag.CurrentFilterProject as string)
+                </td>
+
+            </tr>
+            <tr>
+
+                <td></td>
+                <td>
+                    <input type="submit" value="Search" class="btn btn-default btnSearch" />
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Add New", "Create", new { controller = "Project" }, new { @class = "btn btn-default btnAddNew" })
+                    }
+                </td>
+
+            </tr>
+        </table>
+    </p>
+}
+
+<table class="bordered" width="600">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Project Name", "Index", new { sortOrder = ViewBag.ProjectSortParm, currentFilterProject = ViewBag.CurrentFilterProject })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ProjectId })
+                @if (Request.IsAuthenticated)
+                {
+                    @:|
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+<br /> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilterProject = ViewBag.CurrentFilterProject }))

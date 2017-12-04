@@ -1,0 +1,88 @@
+﻿@model AtlasScrum.Models.Sprint
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Sprint</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Project.ProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SprintName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SprintName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SprintGoal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SprintGoal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DailyScrum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DailyScrum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SprintDemo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SprintDemo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCurrent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCurrent)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default btnDelete" /> 
+            @Html.ActionLink("Back to List", "Index", new { controller = "Sprint" }, new { @class = "btn btn-default btnBack" })
+        </div>
+    }
+</div>

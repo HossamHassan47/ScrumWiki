@@ -1,0 +1,87 @@
+﻿@*@model IEnumerable<AtlasScrum.Models.BacklogItem>*@
+@model PagedList.IPagedList<AtlasScrum.Models.BacklogItem>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Backlog Items";
+}
+
+<h2>Backlog Items</h2>
+
+@using (Html.BeginForm("Index", "BacklogItem", FormMethod.Get))
+{
+    <p>
+        <table class="zebra">
+            <tr>
+                <td>Sprint:</td>
+                <td>@Html.DropDownList("SprintId", string.Empty)</td>
+                <td>Item Description:</td>
+                <td>@Html.TextBox("SearchStringDescription", ViewBag.CurrentFilterDescription as string)</td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Search" class="btn btn-default btnSearch" /></td>
+                <td></td>
+                <td>
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Add New", "Create", new { controller = "BacklogItem" }, new { @class = "btn btn-default btnAddNew" })
+                    }
+                </td>
+            </tr>
+        </table>
+    </p>
+}
+
+<table class="bordered" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Sprint.SprintName)*@
+                @Html.ActionLink("Sprint Name", "Index", new { sortOrder = ViewBag.SprintSortParm, currentFilterDescription = ViewBag.CurrentFilterDescription, currentFilterSprint = ViewBag.CurrentFilterSprint })
+
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Description)*@
+                @Html.ActionLink("Item Description", "Index", new { sortOrder = ViewBag.DescriptionSortParm, currentFilterDescription = ViewBag.CurrentFilterDescription, currentFilterSprint = ViewBag.CurrentFilterSprint })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Estimate)*@
+                @Html.ActionLink("Estimate", "Index", new { sortOrder = ViewBag.EstimateSortParm, currentFilterDescription = ViewBag.CurrentFilterDescription, currentFilterSprint = ViewBag.CurrentFilterSprint })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sprint.SprintName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estimate)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.BacklogItemId })
+
+                @if (Request.IsAuthenticated)
+                {
+                    @:|
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BacklogItemId })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BacklogItemId })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+<br /> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, currentFilterProject = ViewBag.CurrentFilterProject }))

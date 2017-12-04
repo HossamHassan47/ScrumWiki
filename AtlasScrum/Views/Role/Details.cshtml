@@ -1,0 +1,26 @@
+﻿@model AtlasScrum.Models.Role
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Role</h4>
+    <hr />
+    <table class="zebra">
+        <tr>
+            <td><b>@Html.DisplayNameFor(model => model.Description)</b></td>
+            <td>@Html.DisplayFor(model => model.Description)</td>
+        </tr>
+    </table>
+</div>
+<br/>
+<p>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { controller = "Role", id = Model.RoleId }, new { @class = "btn btn-default btnEdit" })
+    }
+    @Html.ActionLink("Back to List", "Index", new { controller = "Role" }, new { @class = "btn btn-default btnBack" })
+</p>

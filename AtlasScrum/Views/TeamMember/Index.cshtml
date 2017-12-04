@@ -1,0 +1,69 @@
+﻿@*@model IEnumerable<AtlasScrum.Models.TeamMember>*@
+@model PagedList.IPagedList<AtlasScrum.Models.TeamMember>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Team Members";
+}
+
+<h2>Team Members</h2>
+
+
+@using (Html.BeginForm("Index", "TeamMember", FormMethod.Get))
+{
+    <p>
+        <table class="zebra">
+            <tr>
+                <td>
+                    Full Name:
+                </td>
+                <td>
+                    @Html.TextBox("SearchStringFullName", ViewBag.CurrentFilterFullName as string)
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Search" class="btn btn-default btnSearch" />
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Add New", "Create", new { controller = "TeamMember" }, new { @class = "btn btn-default btnAddNew" })
+                    }
+                </td>
+            </tr>
+        </table>
+    </p>
+}
+<table class="bordered" width="600">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Full Name", "Index", new { sortOrder = ViewBag.ProjectSortParm, currentFilterFullName = ViewBag.CurrentFilterFullName })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.TeamMemberId })
+                @if (Request.IsAuthenticated)
+                {
+                    @:|
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TeamMemberId })
+                    @:|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TeamMemberId })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br /> Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilterFullName = ViewBag.CurrentFilterFullName }))

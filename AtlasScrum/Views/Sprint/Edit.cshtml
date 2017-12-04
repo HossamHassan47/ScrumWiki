@@ -1,0 +1,103 @@
+﻿@using System.Web.UI.WebControls
+@model AtlasScrum.Models.Sprint
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Sprint</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.SprintId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SprintName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.SprintName)*@
+                @Html.TextBoxFor(model => model.SprintName, new { style = "width: 280px;" })
+                @Html.ValidationMessageFor(model => model.SprintName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SprintGoal, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.SprintGoal)*@
+                @Html.TextBoxFor(model => model.SprintGoal, new { style = "width: 280px;" })
+                @Html.ValidationMessageFor(model => model.SprintGoal)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, "Project", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProjectId", String.Empty)
+                @Html.ValidationMessageFor(model => model.ProjectId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FromDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FromDate)
+                @Html.ValidationMessageFor(model => model.FromDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ToDate)
+                @Html.ValidationMessageFor(model => model.ToDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DailyScrum, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.DailyScrum)*@
+                @Html.TextBoxFor(model => model.DailyScrum, new { style = "width: 280px;" })
+                @Html.ValidationMessageFor(model => model.DailyScrum)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SprintDemo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.SprintDemo)*@
+                @Html.TextBoxFor(model => model.SprintDemo, new { style = "width: 280px;" })
+                @Html.ValidationMessageFor(model => model.SprintDemo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsCurrent, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsCurrent)
+                @Html.ValidationMessageFor(model => model.IsCurrent)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default btnSave" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", new { controller = "Sprint" }, new { @class = "btn btn-default btnBack" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
